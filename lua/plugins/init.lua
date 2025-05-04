@@ -15,7 +15,4 @@ return {
 
   -- friendly-snippets
   { "rafamadriz/friendly-snippets" },
-
-  -- GitSigns
-  { "lewis6991/gitsigns.nvim" },
 }
