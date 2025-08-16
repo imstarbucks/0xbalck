@@ -1,14 +1,22 @@
 -- Goto Normal Mode
 vim.keymap.set("i", "jk", "<Esc>", { noremap = true, silent = true })
 vim.keymap.set("i", "jj", "<Esc>", { noremap = true, silent = true })
- 
+
 -- Yank to clipboard
 vim.keymap.set("v", "<C-c>", '"*y')
 
--- LSP Format
+-- No highligh
+vim.keymap.set("n", "<leader>nh", ":nohlsearch<CR>")
+
+-- <leader>j →  ALE (Prettier)
+vim.keymap.set("n", "<leader>j", function()
+  vim.cmd("ALEFix")
+end, { noremap = true, silent = true, desc = "Format with ALE" })
+
+-- <leader>f → LSP format
 vim.keymap.set("n", "<leader>f", function()
-  vim.lsp.buf.format()
-end, { noremap = true, silent = true })
+  vim.lsp.buf.format({ async = true })
+end, { noremap = true, silent = true, desc = "LSP Format" })
 
 -- LSP GotoDefinition
 vim.keymap.set('n', 'gd', function()
@@ -19,6 +27,11 @@ end, { desc = "Go to Type Definition" })
 vim.keymap.set('n', 'gt', function()
   vim.lsp.buf.type_definition()
 end, { desc = "Go to Type Definition" })
+
+-- LSP show full Diag
+vim.keymap.set('n', '<leader>d', function()
+  vim.diagnostic.open_float(nil, { border = "rounded" })
+end, { silent = true, desc = "Show diagnostics in float" })
 -- Toggle Between Buffer
 vim.keymap.set("n", "<leader><leader>", "<C-^>", { noremap = true, silent = true })
 
@@ -40,12 +53,26 @@ vim.keymap.set("v", "∆", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "˚", ":m '<-2<CR>gv=gv")
 
 -- mini.completion
-vim.api.nvim_set_keymap('i', '<Tab>',
-  [[pumvisible() ? "\<C-n>" : "\<Tab>"]],
-  { noremap = true, expr = true, silent = true }
-)
+local imap_expr = function(lhs, rhs)
+  vim.keymap.set('i', lhs, rhs, { expr = true })
+end
+imap_expr('<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]])
+imap_expr('<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
 
-vim.api.nvim_set_keymap('i', '<S-Tab>',
-  [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]],
-  { noremap = true, expr = true, silent = true }
-)
+_G.cr_action = function()
+  -- If there is selected item in popup, accept it with <C-y>
+  if vim.fn.complete_info()['selected'] ~= -1 then return '\25' end
+  -- Fall back to plain `<CR>`. You might want to customize according
+  -- to other plugins. For example if 'mini.pairs' is set up, replace
+  -- next line with `return MiniPairs.cr()`
+  -- return '\r'
+  return MiniPairs.cr()
+end
+vim.keymap.set('i', '<CR>', 'v:lua.cr_action()', { expr = true })
+
+-- -- Oil mappings
+vim.keymap.set("n", "<C-b>", ":Oil<CR>")
+
+-- Toggle Opacity
+vim.keymap.set('n', '<leader>to', require('config.toggle_transparency').toggle_opacity, { desc = "Toggle Opacity" })
+

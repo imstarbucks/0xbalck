@@ -7,10 +7,14 @@ return {
 
     telescope.setup({
       defaults = {
+        hidden = true     -- 👈 You can also put it here specifically
       },
       pickers = {
         oldfiles = {
-          only_cwd = true -- optional: only show files from current working dir
+          only_cwd = true, -- optional: only show files from current working dir
+          find_files = {
+            hidden = true  -- 👈 You can also put it here specifically
+          }
         }
       },
       extensions = {

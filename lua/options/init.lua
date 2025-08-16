@@ -37,3 +37,14 @@ vim.opt.wildignore = {
   "*.pyc", "*.exe", "*.flv", "*.img", "*.xlsx"
 }
 
+-- Netrw Settings
+vim.g.netrw_banner = 0
+vim.g.netrw_list_hide = [[.DS_Store,.idea,.git,__pycache__,venv,node_modules,*\.o,*\.pyc,.*\.swp]]
+vim.g.netrw_winsize = 20
+
+-- Treesitter fold
+vim.o.foldmethod = "expr"
+vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.o.foldenable = false
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
