@@ -20,7 +20,12 @@ return {
   { "fatih/vim-go" },
 
   -- emmet-vim
-  { "mattn/emmet-vim" },
+  {
+    "mattn/emmet-vim",
+    init = function ()
+      vim.g.user_emmet_leader_key = '<C-E>'
+    end,
+  },
 
   --indent
   {
@@ -37,5 +42,20 @@ return {
   -- Zig plugin
   {
     "ziglang/zig.vim"
+  },
+
+  -- Early retire
+  {
+    "chrisgrieser/nvim-early-retirement",
+    config = true,
+    event = "VeryLazy",
+  },
+
+  -- Astro Plugin
+  {
+    "wuelnerdotexe/vim-astro",
+    init = function()
+      vim.g.astro_typescript = 'enable'
+    end,
   }
 }

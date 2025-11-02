@@ -21,7 +21,7 @@ end, { noremap = true, silent = true, desc = "LSP Format" })
 -- LSP GotoDefinition
 vim.keymap.set('n', 'gd', function()
   vim.lsp.buf.definition()
-end, { desc = "Go to Type Definition" })
+end, { desc = "Go to Definition" })
 
 -- LSP GotoTypeDefinition
 vim.keymap.set('n', 'gt', function()
@@ -53,26 +53,11 @@ vim.keymap.set("v", "∆", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "˚", ":m '<-2<CR>gv=gv")
 
 -- mini.completion
-local imap_expr = function(lhs, rhs)
-  vim.keymap.set('i', lhs, rhs, { expr = true })
-end
-imap_expr('<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]])
-imap_expr('<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
+-- local imap_expr = function(lhs, rhs)
+--   vim.keymap.set('i', lhs, rhs, { expr = true })
+-- end
+-- imap_expr('<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]])
+-- imap_expr('<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]])
 
-_G.cr_action = function()
-  -- If there is selected item in popup, accept it with <C-y>
-  if vim.fn.complete_info()['selected'] ~= -1 then return '\25' end
-  -- Fall back to plain `<CR>`. You might want to customize according
-  -- to other plugins. For example if 'mini.pairs' is set up, replace
-  -- next line with `return MiniPairs.cr()`
-  -- return '\r'
-  return MiniPairs.cr()
-end
-vim.keymap.set('i', '<CR>', 'v:lua.cr_action()', { expr = true })
-
--- -- Oil mappings
-vim.keymap.set("n", "<C-b>", ":Oil<CR>")
-
--- Toggle Opacity
-vim.keymap.set('n', '<leader>to', require('config.toggle_transparency').toggle_opacity, { desc = "Toggle Opacity" })
+-- vim.keymap.set('i', '<CR>', 'v:lua.cr_action()', { expr = true })
 

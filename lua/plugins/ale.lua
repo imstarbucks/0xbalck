@@ -16,6 +16,7 @@ return {
       javascriptreact = { 'prettier' },
       typescriptreact = { 'prettier' },
       vue = { 'biome' },
+      astro = { 'biome' },
     }
 
     -- Linters configuration per filetype

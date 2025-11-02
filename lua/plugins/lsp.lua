@@ -107,7 +107,7 @@ return {
       })
 
       -- ESLint
-      -- lspconfig.eslint.setup({})
+      lspconfig.eslint.setup({})
 
       -- HTML Server
       require("config.lsp.html").setup()
@@ -129,6 +129,9 @@ return {
 
       -- Zig
       lspconfig.zls.setup({})
+
+      -- Astro
+      lspconfig.astro.setup({})
 
       -- Lua language server for Neovim development
       lspconfig.lua_ls.setup({
