@@ -1,0 +1,98 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+command_timeout = 2000
+
+palette = "zenbones-dark"
+
+format = """
+[](dir_bg)\
+$directory\
+[](fg:dir_bg bg:git_bg)\
+$git_branch\
+[](fg:git_bg bg:lang_bg)\
+$nodejs\
+$golang\
+[](lang_bg)\
+$fill\
+$git_status\
+$status\
+$cmd_duration\
+$time\
+$line_break\
+$character"""
+
+[palettes.zenbones-dark]
+foreground = "#B4BDC3"
+background = "#1C1917"
+rose       = "#DE6E7C"
+leaf       = "#819B69"
+wood       = "#B77E64"
+water      = "#6099C0"
+blossom    = "#B279A7"
+sky        = "#66A5AD"
+faded      = "#888F94"
+subtle     = "#403833"
+strong     = "#C4CACF"
+dir_bg     = "#2B3D4F"
+git_bg     = "#2D3A2D"
+lang_bg    = "#2D3539"
+
+[fill]
+symbol = ' '
+
+[character]
+success_symbol = '[>](bold leaf)'
+error_symbol = '[>](bold rose)'
+
+[directory]
+format = '[ $path ]($style)'
+style = 'bold water bg:dir_bg'
+truncation_length = 3
+truncation_symbol = ' '
+
+[git_branch]
+format = '[ $branch ]($style)'
+symbol = ' '
+style = 'bold leaf bg:git_bg'
+
+[git_status]
+format = '($all_status$ahead_behind)'
+style = 'faded'
+conflicted = '[=$count](rose) '
+ahead = '[↑$count](leaf) '
+behind = '[↓$count](rose) '
+diverged = '[↑${ahead_count}↓${behind_count}](wood) '
+untracked = '[?$count](faded) '
+stashed = '[*$count](blossom) '
+modified = '[!$count](wood) '
+staged = '[+$count](leaf) '
+renamed = '[~$count](water) '
+deleted = '[-$count](rose) '
+up_to_date = ''
+
+[nodejs]
+format = '[ node $version ]($style)'
+symbol = ''
+style = 'leaf bg:lang_bg'
+
+[golang]
+format = '[ go $version ]($style)'
+symbol = ''
+style = 'sky bg:lang_bg'
+
+[status]
+disabled = false
+format = '[$symbol $status]($style) '
+symbol = '✗'
+style = 'bold rose'
+
+[cmd_duration]
+format = '[ $duration]($style) '
+style = 'faded'
+min_time = 2_000
+
+[time]
+disabled = false
+format = '[$time]($style)'
+style = 'faded'
+time_format = '%H:%M'

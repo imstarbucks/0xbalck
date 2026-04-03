@@ -1,0 +1,10 @@
+.DS_Store
+*.swp
+*.swo
+*~
+.config/fish/fish_variables
+.config/fish/generated_completions/
+.config/nvim/undodir/
+.config/coc/
+.config/zed/
+.config/raycast/
