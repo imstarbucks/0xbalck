@@ -9,7 +9,7 @@ Personal Neovim configuration using lazy.nvim as the plugin manager. Leader key 
 ## Structure
 
 - `init.lua` — Entry point; loads options, keymaps, then lazy.nvim (in that order)
-- `lua/config/options.lua` — Editor options, PATH setup (nvm node, Go bin), diagnostics config
+- `lua/config/options.lua` — Editor options, PATH setup (fish nvm + bash nvm fallback for node, Go bin), diagnostics config
 - `lua/config/keymaps.lua` — Global keybindings (set before plugins load)
 - `lua/config/lazy.lua` — Bootstraps lazy.nvim, auto-discovers plugin specs from `lua/plugins/`
 - `lua/plugins/` — One file per plugin group, each returns a table of lazy.nvim plugin specs:

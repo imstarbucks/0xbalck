@@ -1,17 +1,18 @@
--- Prepend nvm default node to PATH so Mason can find npm/node
-local nvm_dir = vim.fn.expand("$HOME/.nvm")
-local nvm_default = nvm_dir .. "/alias/default"
-if vim.fn.filereadable(nvm_default) == 1 then
-    local version = vim.fn.trim(vim.fn.readfile(nvm_default)[1])
-    -- Resolve alias like "22" or "lts/jod" to actual installed version
-    local alias_path = nvm_dir .. "/alias/" .. version
-    while vim.fn.filereadable(alias_path) == 1 do
-        version = vim.fn.trim(vim.fn.readfile(alias_path)[1])
-        alias_path = nvm_dir .. "/alias/" .. version
+-- Prepend nvm node to PATH so Mason can find npm/node
+-- Supports both fish nvm (~/.local/share/nvm) and bash nvm (~/.nvm/versions/node)
+local nvm_data = vim.fn.expand("$HOME/.local/share/nvm")
+if vim.fn.isdirectory(nvm_data) == 1 then
+    local versions = vim.fn.glob(nvm_data .. "/v*", false, true)
+    if #versions > 0 then
+        table.sort(versions)
+        local node_bin = versions[#versions] .. "/bin"
+        if vim.fn.isdirectory(node_bin) == 1 then
+            vim.env.PATH = node_bin .. ":" .. vim.env.PATH
+        end
     end
-    -- Find matching installed version
-    local versions_dir = nvm_dir .. "/versions/node"
-    local installed = vim.fn.glob(versions_dir .. "/v" .. version .. "*", false, true)
+else
+    local nvm_dir = vim.fn.expand("$HOME/.nvm")
+    local installed = vim.fn.glob(nvm_dir .. "/versions/node/v*", false, true)
     if #installed > 0 then
         table.sort(installed)
         local node_bin = installed[#installed] .. "/bin"
