@@ -1,6 +1,15 @@
 return {
   { "knubie/vim-kitty-navigator", lazy = false },
 
+  -- Emmet
+  {
+    "mattn/emmet-vim",
+    ft = { "html", "css", "scss", "less", "javascriptreact", "typescriptreact", "vue", "astro", "gotmpl", "gohtmltmpl" },
+    init = function()
+      vim.g.user_emmet_leader_key = "<C-e>"
+    end,
+  },
+
   -- Colorscheme
   -- {
   --     "ronisbr/nano-theme.nvim",
@@ -31,6 +40,8 @@ return {
       })
 
       vim.cmd.colorscheme("lackluster-hack")
+      vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
     end,
   },
 

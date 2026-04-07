@@ -137,6 +137,14 @@ return {
         },
       })
 
+      vim.lsp.config("emmet_language_server", {
+        filetypes = {
+          "html", "css", "scss", "less",
+          "javascriptreact", "typescriptreact",
+          "vue", "astro", "gotmpl", "gohtmltmpl",
+        },
+      })
+
       require("mason-lspconfig").setup({
         automatic_installation = true,
         ensure_installed = {
@@ -149,6 +157,7 @@ return {
           "tailwindcss",
           "astro",
           "vue_ls",
+          "emmet_language_server",
         },
       })
 
