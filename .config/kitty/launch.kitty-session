@@ -1,0 +1,5 @@
+layout tall
+
+cd ~/Documents/Works/OSBR/
+
+launch nvim

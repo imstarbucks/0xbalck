@@ -145,6 +145,9 @@ return {
         },
       })
 
+      vim.lsp.config("oxfmt", {})
+      vim.lsp.config("oxlint", {})
+
       require("mason-lspconfig").setup({
         automatic_installation = true,
         ensure_installed = {

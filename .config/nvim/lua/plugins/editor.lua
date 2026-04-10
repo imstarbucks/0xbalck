@@ -122,10 +122,51 @@ return {
   },
 
   -- Mini.nvim modules
+  -- Mini.nvim modules
   {
     "echasnovski/mini.nvim",
-    event = "VeryLazy",
+    lazy = false,
+    priority = 900,
     config = function()
+      -- Starter (project picker on startup)
+      local starter = require("mini.starter")
+      local function project_items()
+        local base = vim.fn.expand("~/Documents/Works/OSBR")
+        local items = {}
+        local handle = vim.loop.fs_scandir(base)
+        if handle then
+          while true do
+            local name, typ = vim.loop.fs_scandir_next(handle)
+            if not name then break end
+            if typ == "directory" then
+              local path = base .. "/" .. name
+              table.insert(items, {
+                name = name,
+                action = function()
+                  vim.cmd("cd " .. path)
+                  vim.cmd("edit .")
+                end,
+                section = "Projects",
+              })
+            end
+          end
+        end
+        return items
+      end
+
+      starter.setup({
+        items = {
+          project_items,
+          starter.sections.recent_files(5, false, false),
+          starter.sections.builtin_actions(),
+        },
+        content_hooks = {
+          starter.gen_hook.adding_bullet(),
+          starter.gen_hook.aligning("center", "center"),
+        },
+      })
+
+
       -- Icons (ASCII preset — no Nerd Font required)
       require("mini.icons").setup({ style = "ascii" })
       MiniIcons.mock_nvim_web_devicons()
@@ -195,20 +236,22 @@ return {
       formatters_by_ft = {
         go = { "goimports", "gofmt", stop_after_first = true },
         gohtmltmpl = { "prettier" },
-        javascript = { "biome", "prettier", stop_after_first = true },
-        javascriptreact = { "biome", "prettier", stop_after_first = true },
-        typescript = { "biome", "prettier", stop_after_first = true },
-        typescriptreact = { "biome", "prettier", stop_after_first = true },
-        vue = { "biome", "prettier", stop_after_first = true },
+        javascript = { "oxfmt", "biome", "prettier", stop_after_first = true },
+        javascriptreact = { "oxfmt", "biome", "prettier", stop_after_first = true },
+        typescript = { "oxfmt", "biome", "prettier", stop_after_first = true },
+        typescriptreact = { "oxfmt", "biome", "prettier", stop_after_first = true },
+        vue = { "oxfmt", "biome", "prettier", stop_after_first = true },
         astro = { "biome", "prettier", stop_after_first = true },
         html = { "prettier" },
         css = { "prettier" },
-        json = { "biome", "prettier", stop_after_first = true },
-        jsonc = { "biome", "prettier", stop_after_first = true },
+        json = { "oxfmt", "biome", "prettier", stop_after_first = true },
+        jsonc = { "oxfmt", "biome", "prettier", stop_after_first = true },
         yaml = { "prettier" },
       },
       formatters = {
-        biome = { require_cwd = true }
+        biome = { require_cwd = true },
+        oxfmt = { require_cwd = true },
+        oxlint = { require_cwd = true },
       }
     },
   },
