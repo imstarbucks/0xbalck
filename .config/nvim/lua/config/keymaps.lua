@@ -47,7 +47,7 @@ map("n", "<leader>w", "<cmd>set list!<CR>", { desc = "Toggle whitespace" })
 map("n", "<leader>s", "<cmd>w<CR>", { desc = "Save file" })
 
 -- Select all
-map("n", "<C-a>", "gg<S-v>G", { desc = "Select all" })
+map("n", "<leader>a", "gg<S-v>G", { desc = "Select all" })
 
 -- Better indenting (stay in visual mode)
 map("v", "<", "<gv")

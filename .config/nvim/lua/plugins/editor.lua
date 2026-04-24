@@ -45,6 +45,56 @@ return {
     end,
   },
 
+  -- Jump/motion
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
+      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
+      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
+    },
+  },
+
+  -- Show keypresses on screen (toggle with <leader>ck)
+  {
+    "nvzone/showkeys",
+    cmd = "ShowkeysToggle",
+    keys = {
+      { "<leader>ck", "<cmd>ShowkeysToggle<CR>", desc = "Toggle keypress display" },
+    },
+    opts = {
+      timeout = 1,
+      maxkeys = 5,
+      position = "top-right",
+    },
+  },
+
+  {
+    "kvrohit/rasmus.nvim",
+    lazy = false,
+    priority = 1000,
+    keys = {
+      {
+        "<leader>ct",
+        function()
+          local current = vim.g.colors_name or ""
+          if current:match("^lackluster") then
+            vim.cmd.colorscheme("rasmus")
+          else
+            vim.cmd.colorscheme("lackluster-hack")
+            vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+          end
+        end,
+        desc = "Toggle colorscheme (lackluster/rasmus)",
+      },
+    },
+  },
+
   -- Statusline
   {
     "nvim-lualine/lualine.nvim",
@@ -174,8 +224,18 @@ return {
       -- Comment toggling (gcc / gc in visual)
       require("mini.comment").setup()
 
-      -- Surround (sa = add, sd = delete, sr = replace)
-      require("mini.surround").setup()
+      -- Surround (gsa = add, gsd = delete, gsr = replace)
+      require("mini.surround").setup({
+        mappings = {
+          add = "gsa",
+          delete = "gsd",
+          find = "gsf",
+          find_left = "gsF",
+          highlight = "gsh",
+          replace = "gsr",
+          update_n_lines = "gsn",
+        },
+      })
 
       -- Enhanced text objects (around/inside function args, brackets, etc.)
       require("mini.ai").setup()
@@ -184,7 +244,7 @@ return {
       require("mini.splitjoin").setup()
 
       -- Jump to any visible character pair
-      require("mini.jump2d").setup()
+      -- require("mini.jump2d").setup()
 
       -- Move lines/selections with Alt+hjkl
       require("mini.move").setup()

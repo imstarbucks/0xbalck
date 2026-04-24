@@ -4,6 +4,7 @@ if status is-interactive
     alias vi vim
     alias v nvim
     alias lg lazygit
+    alias pn pnpm
 end
 export PATH="$HOME/.local/bin:$PATH"
 fish_add_path ~/go/bin
